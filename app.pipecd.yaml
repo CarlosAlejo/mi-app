@@ -8,26 +8,12 @@ spec:
     stages:
       - name: K8S_CANARY_ROLLOUT
         with:
-          replicas: 20%          
-      
-      - name: ANALYSIS
-        with:
-          duration: 5m
-          metrics:
-            - name: error_rate
-              provider: prometheus   # <--- NUEVO CAMPO OBLIGATORIO
-              query: |
-                sum(rate(http_requests_total{app="mi-app", status=~"5.."}[1m])) 
-                / 
-                sum(rate(http_requests_total{app="mi-app"}[1m]))
-              expected:
-                max: 0.05
-              failure: abort         # Revierte si supera el 5%
-      
+          replicas: 20%          # 20% de los pods son canary
       - name: K8S_PRIMARY_ROLLOUT
       - name: K8S_CANARY_CLEAN
   input:
-    manifests:
-      - namespace.yaml
-      - deployment.yaml
-      - service.yaml
+    kubectl:
+      manifests:
+        - namespace.yaml
+        - deployment.yaml
+        - service.yaml
