@@ -15,13 +15,14 @@ spec:
           duration: 5m
           metrics:
             - name: error_rate
+              provider: prometheus   # <--- NUEVO CAMPO OBLIGATORIO
               query: |
                 sum(rate(http_requests_total{app="mi-app", status=~"5.."}[1m])) 
                 / 
                 sum(rate(http_requests_total{app="mi-app"}[1m]))
               expected:
-                max: 0.05          # <--- SIN COMILLAS, es un número
-              failure: abort       # Revierte automáticamente si la tasa supera el 5%
+                max: 0.05
+              failure: abort         # Revierte si supera el 5%
       
       - name: K8S_PRIMARY_ROLLOUT
       - name: K8S_CANARY_CLEAN
