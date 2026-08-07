@@ -10,9 +10,9 @@ spec:
         with:
           replicas: 20%          
       
-      - name: ANALYSIS          # Análisis automático con Prometheus
+      - name: ANALYSIS
         with:
-          duration: 5m          # Tiempo máximo de monitoreo
+          duration: 5m
           metrics:
             - name: error_rate
               query: |
@@ -20,8 +20,8 @@ spec:
                 / 
                 sum(rate(http_requests_total{app="mi-app"}[1m]))
               expected:
-                max: "0.05"      # <--- AHORA ES UN OBJETO, no un string
-              failure: abort    # Si la tasa de error supera el 5%, revierte el canary automáticamente
+                max: 0.05          # <--- SIN COMILLAS, es un número
+              failure: abort       # Revierte automáticamente si la tasa supera el 5%
       
       - name: K8S_PRIMARY_ROLLOUT
       - name: K8S_CANARY_CLEAN
