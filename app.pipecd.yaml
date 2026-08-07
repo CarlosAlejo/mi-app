@@ -1,0 +1,25 @@
+apiVersion: pipecd.dev/v1beta1
+kind: KubernetesApp
+spec:
+  name: mi-app
+  labels:
+    env: produccion
+  pipeline:
+    stages:
+      - name: K8S_CANARY_ROLLOUT
+        with:
+          replicas: 20%          # 20% de los pods son canary
+      - name: WAIT
+        with:
+          duration: 1m           # Espera 1 minuto
+      - name: WAIT_APPROVAL      # <-- Aprobación manual
+        with:
+          description: "¿Aprobar la promoción del canary a producción?"
+      - name: K8S_PRIMARY_ROLLOUT
+      - name: K8S_CANARY_CLEAN
+  input:
+    kubectl:
+      manifests:
+        - namespace.yaml
+        - deployment.yaml
+        - service.yaml
