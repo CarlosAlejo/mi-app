@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: helloworld
-        image: cotizador
+        image: cotizador:latest
         args: ["server", "--admin-port=9085"]
         ports:
          - containerPort: 9085
