@@ -8,4 +8,4 @@ spec:
     app: mi-app   # <-- Sin la variante, para que enrute tanto a primary como a canary
   ports:
   - port: 80
-    targetPort: 9085
+    targetPort: 80

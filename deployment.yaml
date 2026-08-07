@@ -7,7 +7,7 @@ metadata:
     app: mi-app
     pipecd.dev/variant: primary   # <-- Obligatorio para que PipeCD gestione variantes
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app: mi-app
@@ -22,4 +22,4 @@ spec:
       - name: helloworld
         image: gcr.io/pipecd/helloworld:v0.1.0
         ports:
-        - containerPort: 9085
+        - containerPort: 80
