@@ -8,22 +8,19 @@ spec:
     stages:
       - name: K8S_CANARY_ROLLOUT
         with:
-          replicas: 20%          # 20% de los pods son canary
+          replicas: 20%
+      
       - name: ANALYSIS
         with:
           duration: 5m                    # Tiempo máximo para analizar
           metrics:
             - name: error_rate
               query: |
-                sum(rate(http_requests_total{app="mi-app", status=~"5.."}[1m]))
-                /
+                sum(rate(http_requests_total{app="mi-app", status=~"5.."}[1m])) 
+                / 
                 sum(rate(http_requests_total{app="mi-app"}[1m]))
               expected: "< 0.05"          # La tasa de error debe ser menor al 5%
               failure: abort             # Si falla, revierte el canary (rollback)
-      - name: K8S_PRIMARY_ROLLOUT
+      
+      - name: K8S_PRIMARY_ROLLOUT        # Solo se ejecuta si el análisis fue exitoso
       - name: K8S_CANARY_CLEAN
-  input:
-    manifests:
-      - namespace.yaml
-      - deployment.yaml
-      - service.yaml
