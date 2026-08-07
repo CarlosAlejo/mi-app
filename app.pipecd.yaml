@@ -11,7 +11,7 @@ spec:
           replicas: 20%          # 20% de los pods son canary
       - name: WAIT
         with:
-          duration: 1m           # Espera 1 minuto
+          duration: 30s           # Espera 1 minuto
       - name: WAIT_APPROVAL      # <-- Aprobación manual
         with:
           description: "¿Aprobar la promoción del canary a producción?"
