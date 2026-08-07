@@ -5,7 +5,7 @@ metadata:
   namespace: mi-app
 spec:
   selector:
-    app: mi-app   # <-- Sin la variante, para que enrute tanto a primary como a canary
+    app: mi-app
   ports:
   - port: 80
-    targetPort: 80
+    targetPort: 9085

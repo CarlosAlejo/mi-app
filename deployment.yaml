@@ -5,9 +5,9 @@ metadata:
   namespace: mi-app
   labels:
     app: mi-app
-    pipecd.dev/variant: primary   # <-- Obligatorio para que PipeCD gestione variantes
+    pipecd.dev/variant: primary
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: mi-app
@@ -19,7 +19,7 @@ spec:
         pipecd.dev/variant: primary
     spec:
       containers:
-      - name: ngnix
-        image: nginx:alpine
+      - name: helloworld
+        image: gcr.io/pipecd/helloworld:v0.1.0
         ports:
-        - containerPort: 80
+        - containerPort: 9085
